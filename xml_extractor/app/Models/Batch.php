@@ -9,7 +9,7 @@ class Batch extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status', 'total_files'];
+    protected $fillable = ['name', 'status', 'total_files', 'total_amount'];
 
     public function invoices()
     {

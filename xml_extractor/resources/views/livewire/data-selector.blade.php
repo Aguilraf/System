@@ -32,9 +32,9 @@
             </div>
         </div>
 
-        <!-- Section: Preview -->
+        <!-- Section: Data Table -->
         <div class="school-card p-6 overflow-x-auto">
-            <h3 class="font-bold text-gray-700 mb-4">2. Vista Previa (5 registros)</h3>
+            <h3 class="font-bold text-gray-700 mb-4">2. Datos ({{ count($previewRows) }} registros)</h3>
             
             @if(empty($selectedColumns))
                 <div class="text-center py-12 text-gray-500">Selecciona columnas para ver la vista previa</div>
@@ -56,6 +56,19 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    <tfoot class="bg-gray-100 font-bold">
+                        <tr>
+                            @foreach($selectedColumns as $col)
+                                <td class="px-4 py-3 whitespace-nowrap text-gray-800 border-t border-gray-300">
+                                    @if(isset($columnTotals[$col]))
+                                        {{ number_format($columnTotals[$col], 2) }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            @endforeach
+                        </tr>
+                    </tfoot>
                 </table>
             @endif
         </div>

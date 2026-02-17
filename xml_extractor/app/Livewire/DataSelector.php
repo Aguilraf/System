@@ -12,6 +12,7 @@ class DataSelector extends Component
     public Batch $batch;
     public $availableColumns = [];
     public $selectedColumns = [];
+    public $columnTotals = [];
     public $previewRows = [];
     public $selectAll = false;
 
@@ -55,13 +56,24 @@ class DataSelector extends Component
 
     public function updatePreview()
     {
-        // Get first 5 rows for preview
-        $invoices = $this->batch->invoices()->limit(5)->get();
+        // Get all rows
+        $invoices = $this->batch->invoices()->get();
+        $this->columnTotals = [];
+
         $this->previewRows = $invoices->map(function ($invoice) {
             $row = [];
             foreach ($this->selectedColumns as $col) {
                 // Formatting for preview only
                 $row[$col] = $this->formatValue($invoice->extracted_data[$col] ?? '', $col);
+
+                // Sum only if column is 'Total' (case insensitive)
+                if (strcasecmp($col, 'Total') === 0) {
+                     $val = $invoice->extracted_data[$col] ?? 0;
+                     if (!isset($this->columnTotals[$col])) {
+                         $this->columnTotals[$col] = 0;
+                     }
+                     $this->columnTotals[$col] += (float)$val;
+                }
             }
             return $row;
         })->toArray();
