@@ -19,7 +19,7 @@
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <span class="text-xl font-bold text-blue-600">📚 Extractor XML</span>
+                        <span class="text-xl font-bold text-blue-600">Sistema XML</span>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
