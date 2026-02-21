@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto py-12">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Mis Trabajos</h2>
-        <a href="/" class="btn-primary">Nueva Carga</a>
+        <a href="/xml" class="btn-primary">Nueva Carga</a>
     </div>
 
     <div class="school-card overflow-hidden">
@@ -41,7 +41,7 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="/batch/{{ $batch->id }}" class="text-blue-600 hover:text-blue-900">Abrir</a>
+                            <a href="/xml/batch/{{ $batch->id }}" class="text-blue-600 hover:text-blue-900">Abrir</a>
                         </td>
                     </tr>
                 @endforeach

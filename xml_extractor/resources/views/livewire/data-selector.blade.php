@@ -5,7 +5,7 @@
             <p class="text-sm text-gray-500">{{ $batch->total_files }} archivos procesados</p>
         </div>
         <div class="space-x-2">
-            <a href="/batches" class="text-gray-600 hover:text-blue-600 px-3 py-2">Volver</a>
+            <a href="/xml/batches" class="text-gray-600 hover:text-blue-600 px-3 py-2">Volver</a>
             <button wire:click="export" class="btn-primary">Descargar Excel</button>
         </div>
     </div>

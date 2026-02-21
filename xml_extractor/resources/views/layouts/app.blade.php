@@ -17,55 +17,106 @@
         .nav-link:hover { color: #2563eb; }
         .nav-link.active { color: #2563eb; font-weight: 600; }
         .nav-link.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: linear-gradient(to right, #3b82f6, #6366f1); border-radius: 1px; }
+        .nav-link.active-finance { color: #059669; font-weight: 600; }
+        .nav-link.active-finance::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: linear-gradient(to right, #10b981, #14b8a6); border-radius: 1px; }
+        .nav-link:hover.finance-link { color: #059669; }
         .nav-divider { width: 1px; height: 24px; background-color: #e5e7eb; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
     </style>
     @livewireStyles
 </head>
 <body class="min-h-screen flex flex-col">
+    @php
+        $isXmlModule = request()->is('xml*');
+        $isFinanceModule = request()->is('finance*');
+        $isDashboard = request()->is('/') || (!$isXmlModule && !$isFinanceModule);
+    @endphp
+
     <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
+                    {{-- Logo / Home --}}
                     <a href="/" class="flex-shrink-0 flex items-center gap-2 mr-8">
                         <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Sistema de Gestión</span>
                     </a>
+
+                    {{-- Module Badge --}}
+                    @if($isXmlModule)
+                        <div class="hidden sm:flex items-center gap-2 mr-4 px-3 py-1 rounded-full bg-blue-50 border border-blue-200">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <span class="text-xs font-semibold text-blue-700">Facturas XML</span>
+                        </div>
+                    @elseif($isFinanceModule)
+                        <div class="hidden sm:flex items-center gap-2 mr-4 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                            <span class="text-xs font-semibold text-emerald-700">Finanzas</span>
+                        </div>
+                    @endif
                 </div>
+
                 <div class="flex items-center space-x-1">
-                    {{-- XML Module Links --}}
-                    <a href="/" class="nav-link px-3 py-5 text-sm font-medium {{ request()->is('/') ? 'active' : '' }}">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                            Subir XML
-                        </span>
-                    </a>
-                    <a href="/batches" class="nav-link px-3 py-5 text-sm font-medium {{ request()->is('batches*') || request()->is('batch*') ? 'active' : '' }}">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                            Mis Trabajos
-                        </span>
-                    </a>
+                    @if($isXmlModule)
+                        {{-- XML Module Navigation --}}
+                        <a href="/xml" class="nav-link px-3 py-5 text-sm font-medium {{ request()->is('xml') ? 'active' : '' }}">
+                            <span class="flex items-center gap-1.5">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                                Subir XML
+                            </span>
+                        </a>
+                        <a href="/xml/batches" class="nav-link px-3 py-5 text-sm font-medium {{ request()->is('xml/batches*') || request()->is('xml/batch/*') ? 'active' : '' }}">
+                            <span class="flex items-center gap-1.5">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                Mis Trabajos
+                            </span>
+                        </a>
 
-                    <div class="nav-divider mx-2"></div>
+                        <div class="nav-divider mx-2"></div>
 
-                    {{-- Finance Module Links --}}
-                    <a href="/finance" class="nav-link px-3 py-5 text-sm font-medium {{ request()->is('finance') ? 'active' : '' }}">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                            Finanzas
-                        </span>
-                    </a>
-                    <a href="/expenses" class="nav-link px-3 py-5 text-sm font-medium {{ request()->is('expenses') ? 'active' : '' }}">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"/></svg>
-                            Egresos
-                        </span>
-                    </a>
-                    <a href="/incomes" class="nav-link px-3 py-5 text-sm font-medium {{ request()->is('incomes') ? 'active' : '' }}">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"/></svg>
-                            Ingresos
-                        </span>
-                    </a>
+                        <a href="/" class="nav-link px-3 py-5 text-sm font-medium">
+                            <span class="flex items-center gap-1.5">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                                Módulos
+                            </span>
+                        </a>
+
+                    @elseif($isFinanceModule)
+                        {{-- Finance Module Navigation --}}
+                        <a href="/finance" class="nav-link finance-link px-3 py-5 text-sm font-medium {{ request()->is('finance') ? 'active-finance' : '' }}">
+                            <span class="flex items-center gap-1.5">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                Panel
+                            </span>
+                        </a>
+                        <a href="/finance/expenses" class="nav-link finance-link px-3 py-5 text-sm font-medium {{ request()->is('finance/expenses') ? 'active-finance' : '' }}">
+                            <span class="flex items-center gap-1.5">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"/></svg>
+                                Egresos
+                            </span>
+                        </a>
+                        <a href="/finance/incomes" class="nav-link finance-link px-3 py-5 text-sm font-medium {{ request()->is('finance/incomes') ? 'active-finance' : '' }}">
+                            <span class="flex items-center gap-1.5">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"/></svg>
+                                Ingresos
+                            </span>
+                        </a>
+
+                        <div class="nav-divider mx-2"></div>
+
+                        <a href="/" class="nav-link px-3 py-5 text-sm font-medium">
+                            <span class="flex items-center gap-1.5">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                                Módulos
+                            </span>
+                        </a>
+
+                    @else
+                        {{-- Dashboard - no module links, just branding --}}
+                    @endif
                 </div>
             </div>
         </div>
