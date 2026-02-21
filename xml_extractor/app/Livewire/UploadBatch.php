@@ -161,7 +161,7 @@ class UploadBatch extends Component
 
         $this->isProcessing = false;
 
-        return redirect()->to('/batch/' . $batch->id);
+        return redirect()->to('/xml/batch/' . $batch->id);
     }
 
     public function render()

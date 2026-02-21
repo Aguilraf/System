@@ -95,7 +95,7 @@
 
     {{-- Quick Actions --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <a href="/expenses" class="school-card p-6 flex items-center gap-4 hover:shadow-lg transition-all duration-200 hover:border-red-300 group cursor-pointer">
+        <a href="/finance/expenses" class="school-card p-6 flex items-center gap-4 hover:shadow-lg transition-all duration-200 hover:border-red-300 group cursor-pointer">
             <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-red-600 group-hover:bg-red-100 transition-colors">
                 <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"/></svg>
             </div>
@@ -106,7 +106,7 @@
             <svg class="h-5 w-5 text-gray-400 ml-auto group-hover:text-red-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
 
-        <a href="/incomes" class="school-card p-6 flex items-center gap-4 hover:shadow-lg transition-all duration-200 hover:border-emerald-300 group cursor-pointer">
+        <a href="/finance/incomes" class="school-card p-6 flex items-center gap-4 hover:shadow-lg transition-all duration-200 hover:border-emerald-300 group cursor-pointer">
             <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition-colors">
                 <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"/></svg>
             </div>
@@ -172,7 +172,7 @@
         <div class="school-card p-6">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-lg font-semibold text-gray-800">Últimos Egresos</h2>
-                <a href="/expenses" class="text-sm text-blue-600 hover:text-blue-800 transition-colors">Ver todos →</a>
+                <a href="/finance/expenses" class="text-sm text-blue-600 hover:text-blue-800 transition-colors">Ver todos →</a>
             </div>
             @forelse($expenses->take(5) as $expense)
                 <div class="flex items-center justify-between py-3 {{ !$loop->last ? 'border-b border-gray-100' : '' }}">
@@ -200,7 +200,7 @@
         <div class="school-card p-6">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-lg font-semibold text-gray-800">Últimos Ingresos</h2>
-                <a href="/incomes" class="text-sm text-blue-600 hover:text-blue-800 transition-colors">Ver todos →</a>
+                <a href="/finance/incomes" class="text-sm text-blue-600 hover:text-blue-800 transition-colors">Ver todos →</a>
             </div>
             @forelse($incomes->take(5) as $income)
                 <div class="flex items-center justify-between py-3 {{ !$loop->last ? 'border-b border-gray-100' : '' }}">

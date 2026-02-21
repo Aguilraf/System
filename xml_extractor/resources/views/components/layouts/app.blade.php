@@ -24,7 +24,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="/" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
-                    <a href="/batches" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Mis Trabajos</a>
+                    <a href="/xml/batches" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Mis Trabajos</a>
                 </div>
             </div>
         </div>
