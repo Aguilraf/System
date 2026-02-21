@@ -16,6 +16,8 @@ class UploadBatch extends Component
     public $files = [];
     public $sfiles = []; // Staged files with metadata
     public $isProcessing = false;
+    public $showConfirmationModal = false;
+    public $processTotal = 0.0;
 
     public function updatedFiles()
     {
@@ -54,6 +56,7 @@ class UploadBatch extends Component
                     'status' => $status, // valid, duplicate, error
                     'message' => $message,
                     'duplicate_batch_id' => $duplicateBatchId,
+                    'amount' => isset($data['Total']) && is_numeric($data['Total']) ? (float)$data['Total'] : 0,
                     'selected' => $status === 'valid', // Default select valid ones
                 ];
 
@@ -83,6 +86,19 @@ class UploadBatch extends Component
     public function toggleSelection($index)
     {
         $this->sfiles[$index]['selected'] = !$this->sfiles[$index]['selected'];
+    }
+
+    public function triggerSave()
+    {
+        $selectedFiles = collect($this->sfiles)->where('selected', true);
+        
+        if ($selectedFiles->isEmpty()) {
+            $this->addError('files', 'Debes seleccionar al menos un archivo para procesar.');
+            return;
+        }
+
+        $this->processTotal = $selectedFiles->sum('amount');
+        $this->showConfirmationModal = true;
     }
 
     public function save(XmlParserService $parser)
